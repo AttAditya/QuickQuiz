@@ -3,6 +3,8 @@ let questionCardsContainer = document.querySelector('.question-cards');
 let previousButton = document.querySelector('.previous-button');
 let nextButton = document.querySelector('.next-button');
 
+let timeouts = [];
+
 questionCardsContainer.addEventListener("click", (event) => {
     let target = event.target;
 
@@ -44,10 +46,20 @@ questionCardsContainer.addEventListener("click", (event) => {
 
         let nextButton = document.querySelector('.next-button');
         nextButton.disabled = false;
+
+        let nextQuestionTimeout = window.setTimeout(() => {
+            nextButton.click();
+        }, 3000);
+
+        timeouts.push(nextQuestionTimeout);
     }
 });
 
 nextButton.addEventListener("click", () => {
+    timeouts.forEach(timeout => {
+        window.clearTimeout(timeout);
+    });
+
     if (nextButton.disabled) {
         return;
     }
@@ -56,15 +68,9 @@ nextButton.addEventListener("click", () => {
     let nextQuestionCard = currentQuestionCard.nextElementSibling;
 
     if (nextQuestionCard == null) {
-        window.clearInterval(updateScores);
-        window.clearInterval(updateAttempted);
-        window.clearInterval(updatePreviousButton);
+        localStorage.setItem("qq-scores", scores.points);
 
-        document.querySelector(".title").innerHTML = scores.points;
-
-        let endScreen = document.querySelector(".end-screen");
-        document.querySelector(".container").innerHTML = endScreen.innerHTML;
-
+        window.location.assign("end.html");
         return;
     }
 
@@ -81,6 +87,10 @@ nextButton.addEventListener("click", () => {
 });
 
 previousButton.addEventListener("click", () => {
+    timeouts.forEach(timeout => {
+        window.clearTimeout(timeout);
+    });
+
     if (previousButton.disabled) {
         return;
     }
