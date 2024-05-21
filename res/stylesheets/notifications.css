@@ -1,0 +1,38 @@
+@import url("variables.css");
+
+.notifications {
+    position: fixed;
+
+    bottom: 0;
+    right: 0;
+
+    width: 30%;
+    height: 100%;
+
+    padding: 1rem;
+
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    gap: 1rem;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+.notification {
+    width: 100%;
+
+    padding: 1rem;
+
+    border-radius: 1rem;
+
+    background-color: var(--c2);
+    color: var(--c3);
+}
+

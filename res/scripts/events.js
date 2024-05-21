@@ -5,6 +5,12 @@ let nextButton = document.querySelector('.next-button');
 
 let timeouts = [];
 
+function clearTimeouts() {
+    timeouts.forEach(timeout => {
+        window.clearTimeout(timeout);
+    });
+}
+
 questionCardsContainer.addEventListener("click", (event) => {
     let target = event.target;
 
@@ -47,6 +53,7 @@ questionCardsContainer.addEventListener("click", (event) => {
         let nextButton = document.querySelector('.next-button');
         nextButton.disabled = false;
 
+        notify("Going to the next question in 3 seconds...")
         let nextQuestionTimeout = window.setTimeout(() => {
             nextButton.click();
         }, 3000);
@@ -56,9 +63,7 @@ questionCardsContainer.addEventListener("click", (event) => {
 });
 
 nextButton.addEventListener("click", () => {
-    timeouts.forEach(timeout => {
-        window.clearTimeout(timeout);
-    });
+    clearTimeouts();
 
     if (nextButton.disabled) {
         return;
@@ -87,9 +92,7 @@ nextButton.addEventListener("click", () => {
 });
 
 previousButton.addEventListener("click", () => {
-    timeouts.forEach(timeout => {
-        window.clearTimeout(timeout);
-    });
+    clearTimeouts();
 
     if (previousButton.disabled) {
         return;
